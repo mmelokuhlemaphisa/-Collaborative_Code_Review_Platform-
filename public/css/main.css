@@ -14,5 +14,29 @@ main {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  }
+
+.logo img {
+  width: 200px; 
+  height: auto;
+  margin-bottom: 20px;
+
+  /* Add any additional styles for the logo here */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
 }
 
+.heromessage {
+  text-align: center;
+  max-width: 800px;
+  padding: 20px;
+
+  /* add any additional style for logo here */
+  
+
+
+
+
+
+}

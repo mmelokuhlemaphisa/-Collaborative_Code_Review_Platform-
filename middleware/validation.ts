@@ -102,6 +102,74 @@ export const validateUserUpdate = (
   next();
 };
 
+// Validate project creation
+export const validateProject = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { name, description } = req.body;
+
+  const errors: string[] = [];
+
+  if (!name || name.trim().length < 3) {
+    errors.push("Project name must be at least 3 characters long");
+  }
+
+  if (name && name.length > 100) {
+    errors.push("Project name must not exceed 100 characters");
+  }
+
+  if (!description || description.trim().length < 10) {
+    errors.push("Project description must be at least 10 characters long");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};
+
+// Validate project update
+export const validateProjectUpdate = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { name, description } = req.body;
+
+  const errors: string[] = [];
+
+  if (name !== undefined && name.trim().length < 3) {
+    errors.push("Project name must be at least 3 characters long");
+  }
+
+  if (name !== undefined && name.length > 100) {
+    errors.push("Project name must not exceed 100 characters");
+  }
+
+  if (description !== undefined && description.trim().length < 10) {
+    errors.push("Project description must be at least 10 characters long");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};
+
 // Helper function to validate email
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

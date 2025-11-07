@@ -2,6 +2,9 @@ require("dotenv").config();
 import { Express, Request, Response, NextFunction } from "express";
 import { testDbConnection } from "./config/database";
 import path from "path";
+import authRoutes from "./routes/AuthRoutes";
+import userRoutes from "./routes/userRoutes";
+import { errorHandler } from "./middleware/errorHandler";
 
 const express = require("express");
 
@@ -10,11 +13,19 @@ const app: Express = express();
 app.use(express.json());
 // serve static asset from public
 app.use(express.static(path.join(__dirname, "public")));
+
+// API Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+
 app.get("/", (req, res) => {
   req: Request;
   res: Response;
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
+
+// Error handler middleware (must be after all routes)
+app.use(errorHandler);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({
@@ -22,7 +33,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     message: "Route not found",
   });
 });
-
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

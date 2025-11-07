@@ -1,0 +1,46 @@
+### Register User
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "role": "reviewer"
+}
+
+###
+
+### Register Submitter
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "password": "password123",
+  "role": "submitter"
+}
+
+###
+
+### Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+###
+
+### Get Current User (Replace with your token)
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+### Get All Users (Replace with your token)
+GET http://localhost:3000/api/users
+Authorization: Bearer YOUR_TOKEN_HERE

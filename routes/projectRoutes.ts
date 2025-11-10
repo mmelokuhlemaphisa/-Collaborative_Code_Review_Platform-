@@ -1,8 +1,22 @@
 import { Router } from "express";
-import {createProject, getAllProjects,getProjectById,getMyProjects,getProjectsByMember,updateProject,deleteProject,addMember,removeMember,getProjectMembers,
+import {
+  createProject,
+  getAllProjects,
+  getProjectById,
+  getMyProjects,
+  getProjectsByMember,
+  updateProject,
+  deleteProject,
+  addMember,
+  removeMember,
+  getProjectMembers,
 } from "../controllers/projectController";
+import { getSubmissionsByProject } from "../controllers/submitionController";
 import { authenticate } from "../middleware/auth";
-import { validateProject, validateProjectUpdate,} from "../middleware/validation";
+import {
+  validateProject,
+  validateProjectUpdate,
+} from "../middleware/validation";
 
 const router = Router();
 
@@ -22,5 +36,8 @@ router.delete("/:id", deleteProject);
 router.get("/:id/members", getProjectMembers);
 router.post("/:id/members", addMember);
 router.delete("/:id/members/:userId", removeMember);
+
+// Submissions for a project
+router.get("/:id/submissions", getSubmissionsByProject);
 
 export default router;

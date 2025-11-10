@@ -170,6 +170,91 @@ export const validateProjectUpdate = (
   next();
 };
 
+// Validate submission creation
+export const validateSubmission = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { project_id, code } = req.body;
+
+  const errors: string[] = [];
+
+  if (!project_id || isNaN(parseInt(project_id))) {
+    errors.push("Valid project ID is required");
+  }
+
+  if (!code || code.trim().length < 10) {
+    errors.push("Code must be at least 10 characters long");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};
+
+// Validate submission status update
+export const validateSubmissionStatus = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { status } = req.body;
+
+  const errors: string[] = [];
+  const validStatuses = ["pending", "approved", "rejected", "under_review"];
+
+  if (!status) {
+    errors.push("Status is required");
+  } else if (!validStatuses.includes(status)) {
+    errors.push("Status must be: pending, approved, rejected, or under_review");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};
+
+// Validate submission update (code)
+export const validateSubmissionUpdate = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { code } = req.body;
+
+  const errors: string[] = [];
+
+  if (code !== undefined && code.trim().length < 10) {
+    errors.push("Code must be at least 10 characters long");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};
+
 // Helper function to validate email
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

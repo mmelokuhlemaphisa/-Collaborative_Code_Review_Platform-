@@ -5,6 +5,7 @@ import path from "path";
 import authRoutes from "./routes/AuthRoutes";
 import userRoutes from "./routes/userRoutes";
 import projectRoutes from "./routes/projectRoutes";
+import submissionRoutes from "./routes/submissionRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 
 const express = require("express");
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/submissions", submissionRoutes);
 
 app.get("/", (req, res) => {
   req: Request;

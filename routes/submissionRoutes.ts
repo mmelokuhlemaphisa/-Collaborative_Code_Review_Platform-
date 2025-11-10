@@ -10,11 +10,17 @@ import {
   updateSubmission,
   deleteSubmission,
 } from "../controllers/submitionController";
+import {
+  addComment,
+  getCommentsBySubmission,
+  getCommentsByLine,
+} from "../controllers/commentController";
 import { authenticate } from "../middleware/auth";
 import {
   validateSubmission,
   validateSubmissionStatus,
   validateSubmissionUpdate,
+  validateComment,
 } from "../middleware/validation";
 
 const router = Router();
@@ -33,5 +39,10 @@ router.delete("/:id", deleteSubmission);
 
 // Status update route
 router.patch("/:id/status", validateSubmissionStatus, updateSubmissionStatus);
+
+// Comment routes for submissions
+router.post("/:id/comments", validateComment, addComment);
+router.get("/:id/comments", getCommentsBySubmission);
+router.get("/:id/comments/line/:lineNumber", getCommentsByLine);
 
 export default router;

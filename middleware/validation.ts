@@ -255,6 +255,82 @@ export const validateSubmissionUpdate = (
   next();
 };
 
+// Validate comment creation
+export const validateComment = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { line_number, content } = req.body;
+
+  const errors: string[] = [];
+
+  if (line_number === undefined || isNaN(parseInt(line_number))) {
+    errors.push("Valid line number is required");
+  }
+
+  if (line_number !== undefined && parseInt(line_number) < 1) {
+    errors.push("Line number must be at least 1");
+  }
+
+  if (!content || content.trim().length < 1) {
+    errors.push("Comment content is required");
+  }
+
+  if (content && content.length > 1000) {
+    errors.push("Comment content must not exceed 1000 characters");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};
+
+// Validate comment update
+export const validateCommentUpdate = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { line_number, content } = req.body;
+
+  const errors: string[] = [];
+
+  if (line_number !== undefined && isNaN(parseInt(line_number))) {
+    errors.push("Line number must be a valid number");
+  }
+
+  if (line_number !== undefined && parseInt(line_number) < 1) {
+    errors.push("Line number must be at least 1");
+  }
+
+  if (content !== undefined && content.trim().length < 1) {
+    errors.push("Comment content cannot be empty");
+  }
+
+  if (content !== undefined && content.length > 1000) {
+    errors.push("Comment content must not exceed 1000 characters");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};
+
 // Helper function to validate email
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

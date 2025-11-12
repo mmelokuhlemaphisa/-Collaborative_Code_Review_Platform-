@@ -336,3 +336,33 @@ function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
+
+// Validate review (comment length etc.)
+export const validateReview = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { comment } = req.body;
+
+  const errors: string[] = [];
+
+  if (comment !== undefined && typeof comment !== "string") {
+    errors.push("Comment must be a string");
+  }
+
+  if (comment !== undefined && comment.length > 1000) {
+    errors.push("Comment must not exceed 1000 characters");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors,
+    });
+    return;
+  }
+
+  next();
+};

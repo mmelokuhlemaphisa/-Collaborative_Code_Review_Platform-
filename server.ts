@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes";
 import projectRoutes from "./routes/projectRoutes";
 import submissionRoutes from "./routes/submissionRoutes";
 import commentRoutes from "./routes/commentRoutes";
+import reviewRoutes from "./routes/ReviewRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 
 const express = require("express");
@@ -23,6 +24,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api", reviewRoutes);
 
 app.get("/", (req, res) => {
   req: Request;

@@ -200,6 +200,21 @@ Server will start at:
 http://localhost:4000
 ```
 
+3. **Create a `.env` file** in the root directory with the following variables:
+   ```
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=Collaborative_Code _Review _Platform
+DB_PASSWORD=12345
+DB_PORT=5432
+PORT=4040
+
+J_SECRET= 1234567890QWERTYUIOPASDFGHJKL
+
+# JWT Configuration
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production_min_32_chars
+JWT_EXPIRES_IN=7d
+
 ---
 # Database Name
 Collaborative_Code _Review _Platform
